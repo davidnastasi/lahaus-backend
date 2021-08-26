@@ -1,0 +1,59 @@
+version: 1.0
+
+systemsettings:
+  storage:
+    database:
+      host: "localhost"
+      port: 5432
+      user: "postgres"
+      password: ""
+      databasename: "lahaus"
+
+  security:
+    secret: "s3cr3t"
+    tokendurationinminutes: 15
+    issuer: "Lahaus"
+
+  logger:
+    level: "INFO"
+
+businessrules:
+  housevalidator:
+    bedrooms:
+      lowerbound: 1
+      upperbound: 14
+    bathrooms:
+      lowerbound: 1
+      upperbound: 12
+    area:
+      lowerbound: 50
+      upperbound: 3000
+    parkingspots: 0
+
+  apartmentvalidator:
+    bedrooms:
+      lowerbound: 1
+      upperbound: 6
+    bathrooms:
+      lowerbound: 1
+      upperbound: 4
+    area:
+      lowerbound: 40
+      upperbound: 400
+    parkingspots: 1
+
+  bundlevalidator:
+    longitude:
+      lowerbound: -99.296741
+      upperbound: -98.916339
+    latitude:
+      lowerbound: 19.296134
+      upperbound: 19.661237
+    pricein:
+      lowerbound: 1000000
+      upperbound: 15000000
+    priceout:
+      lowerbound: 50000000
+      upperbound: 3500000000
+
+

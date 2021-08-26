@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS favourites CASCADE;
+DROP TABLE IF EXISTS properties CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TYPE property_type;
+DROP TYPE property_status;
