@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 	"lahaus/domain/model"
 	"net/mail"
@@ -11,26 +12,43 @@ const HOUSE = "HOUSE"
 const APARTMENT = "APARTMENT"
 
 func mapPropertyRequestToProperty(request propertyRequest) (*model.Property, error) {
+	if request.Title == nil || len(*request.Title) == 0 {
+		return nil, errors.New("title field is a must")
+	}
+	if request.Bedrooms == nil {
+		return nil, errors.New("bedrooms field is a must")
+	}
+
+	if request.Bathrooms == nil {
+		return nil, errors.New("bathrooms field is a must")
+	}
+
+	if request.Pricing.SalePrice == nil {
+		return nil, errors.New("salePrice field is a must")
+	}
+	if request.Area == nil {
+		return nil, errors.New("area field is a must")
+	}
 	propertyType, err := mapStringToPropertyType(request.PropertyType)
 	if err != nil {
 		return nil, err
 	}
 	return &model.Property{
-		Title:       request.Title,
+		Title:       *request.Title,
 		Description: request.Description,
 		Location: model.Location{
 			Longitude: request.Location.Longitude,
 			Latitude:  request.Location.Latitude,
 		},
 		Pricing: model.Pricing{
-			SalePrice:         request.Pricing.SalePrice,
+			SalePrice:         *request.Pricing.SalePrice,
 			AdministrativeFee: request.Pricing.AdministrativeFee,
 		},
 		PropertyType: propertyType,
-		Bedrooms:     request.Bedrooms,
-		Bathrooms:    request.Bathrooms,
+		Bedrooms:     *request.Bedrooms,
+		Bathrooms:    *request.Bathrooms,
 		ParkingSpots: request.ParkingSpots,
-		Area:         request.Area,
+		Area:         *request.Area,
 		Photos:       request.Photos,
 	}, nil
 }

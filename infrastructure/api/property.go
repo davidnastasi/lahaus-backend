@@ -50,15 +50,15 @@ func NewPropertyHandler(createExecutor, updateExecutor PropertyExecutor, filterE
 }
 
 type propertyRequest struct {
-	Title        string   `json:"title"`
+	Title        *string  `json:"title"`
 	Description  *string  `json:"description"`
 	Location     location `json:"location"`
 	Pricing      pricing  `json:"pricing"`
 	PropertyType string   `json:"propertyType"`
-	Bedrooms     int      `json:"bedrooms"`
-	Bathrooms    int      `json:"bathrooms"`
+	Bedrooms     *int     `json:"bedrooms"`
+	Bathrooms    *int     `json:"bathrooms"`
 	ParkingSpots *int     `json:"parkingSpots"`
-	Area         int      `json:"area"`
+	Area         *int     `json:"area"`
 	Photos       []string `json:"photos"`
 }
 
@@ -68,7 +68,7 @@ type location struct {
 }
 
 type pricing struct {
-	SalePrice         int  `json:"salePrice"`
+	SalePrice         *int `json:"salePrice"`
 	AdministrativeFee *int `json:"administrativeFee"`
 }
 

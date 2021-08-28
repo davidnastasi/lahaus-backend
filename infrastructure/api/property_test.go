@@ -56,6 +56,147 @@ func (suite *PropertySuite) TearDownSuite() {
 	suite.mockCtrl.Finish()
 }
 
+func (suite *PropertySuite) TestCreateProperty_TitleNotDeclared() {
+	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
+		{
+			"location": {
+				"longitude": -94.0665887,
+				"latitude": 94.6371593
+			},
+			"pricing": {
+				"salePrice": 450000000
+			},
+			"propertyType": "HOUSE",
+			"bedrooms": 3,
+			"bathrooms": 2,
+			"parkingSpots": 1,
+			"area": 60,
+			"photos": [
+				"https://cdn.pixabay.com/photo/2014/08/11/21/39/wall-416060_960_720.jpg",
+				"https://cdn.pixabay.com/photo/2016/09/22/11/55/kitchen-1687121_960_720.jpg"
+			]
+		}
+	`))
+	suite.NoError(err)
+
+	rr := httptest.NewRecorder()
+	suite.chiRouter.ServeHTTP(rr, req)
+	suite.Equal(http.StatusBadRequest, rr.Code)
+}
+
+func (suite *PropertySuite) TestCreateProperty_SalePriceNotDeclared() {
+	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
+		{
+			"title": "Apartamento cerca a la estación",
+			"location": {
+				"longitude": -94.0665887,
+				"latitude": 94.6371593
+			},
+			"pricing": {
+				"administrativeFee": 250000
+			},
+			"propertyType": "UNKNOWN",
+			"bedrooms": 3,
+			"bathrooms": 2,
+			"parkingSpots": 1,
+			"area": 60,
+			"photos": [
+				"https://cdn.pixabay.com/photo/2014/08/11/21/39/wall-416060_960_720.jpg",
+				"https://cdn.pixabay.com/photo/2016/09/22/11/55/kitchen-1687121_960_720.jpg"
+			]
+		}
+	`))
+	suite.NoError(err)
+
+	rr := httptest.NewRecorder()
+	suite.chiRouter.ServeHTTP(rr, req)
+	suite.Equal(http.StatusBadRequest, rr.Code)
+}
+
+func (suite *PropertySuite) TestCreateProperty_BedroomsNotDeclared() {
+	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
+		{
+			"title": "Apartamento cerca a la estación",
+			"location": {
+				"longitude": -94.0665887,
+				"latitude": 94.6371593
+			},
+			"pricing": {
+				"salePrice": 450000000
+			},
+			"propertyType": "HOUSE",
+			"bathrooms": 2,
+			"parkingSpots": 1,
+			"area": 60,
+			"photos": [
+				"https://cdn.pixabay.com/photo/2014/08/11/21/39/wall-416060_960_720.jpg",
+				"https://cdn.pixabay.com/photo/2016/09/22/11/55/kitchen-1687121_960_720.jpg"
+			]
+		}
+	`))
+	suite.NoError(err)
+
+	rr := httptest.NewRecorder()
+	suite.chiRouter.ServeHTTP(rr, req)
+	suite.Equal(http.StatusBadRequest, rr.Code)
+}
+
+func (suite *PropertySuite) TestCreateProperty_BathroomsNotDeclared() {
+	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
+		{
+			"title": "Apartamento cerca a la estación",
+			"location": {
+				"longitude": -94.0665887,
+				"latitude": 94.6371593
+			},
+			"pricing": {
+				"salePrice": 450000000
+			},
+			"propertyType": "APARTMENT",
+			"bedrooms": 3,
+			"parkingSpots": 1,
+			"area": 60,
+			"photos": [
+				"https://cdn.pixabay.com/photo/2014/08/11/21/39/wall-416060_960_720.jpg",
+				"https://cdn.pixabay.com/photo/2016/09/22/11/55/kitchen-1687121_960_720.jpg"
+			]
+		}
+	`))
+	suite.NoError(err)
+
+	rr := httptest.NewRecorder()
+	suite.chiRouter.ServeHTTP(rr, req)
+	suite.Equal(http.StatusBadRequest, rr.Code)
+}
+
+func (suite *PropertySuite) TestCreateProperty_AreaNotDeclared() {
+	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
+		{
+			"title": "Apartamento cerca a la estación",
+			"location": {
+				"longitude": -94.0665887,
+				"latitude": 94.6371593
+			},
+			"pricing": {
+				"salePrice": 450000000
+			},
+			"propertyType": "APARTMENT",
+			"bedrooms": 3,
+			"bathrooms": 2,
+			"parkingSpots": 1,
+			"photos": [
+				"https://cdn.pixabay.com/photo/2014/08/11/21/39/wall-416060_960_720.jpg",
+				"https://cdn.pixabay.com/photo/2016/09/22/11/55/kitchen-1687121_960_720.jpg"
+			]
+		}
+	`))
+	suite.NoError(err)
+
+	rr := httptest.NewRecorder()
+	suite.chiRouter.ServeHTTP(rr, req)
+	suite.Equal(http.StatusBadRequest, rr.Code)
+}
+
 func (suite *PropertySuite) TestCreateProperty_PropertyTypeError() {
 	req, err := http.NewRequest("POST", "/v1/properties/", strings.NewReader(`
 		{
